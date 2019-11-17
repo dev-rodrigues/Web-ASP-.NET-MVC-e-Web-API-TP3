@@ -11,17 +11,18 @@ using Owin;
 using API.Providers;
 using API.Models;
 
-namespace API
-{
-    public partial class Startup
-    {
-        public static OAuthAuthorizationServerOptions OAuthOptions { get; private set; }
+namespace API {
+    public partial class Startup {
+        public static OAuthAuthorizationServerOptions OAuthOptions {
+            get; private set;
+        }
 
-        public static string PublicClientId { get; private set; }
+        public static string PublicClientId {
+            get; private set;
+        }
 
         // Para obter mais informações sobre a autenticação de configuração, visite https://go.microsoft.com/fwlink/?LinkId=301864
-        public void ConfigureAuth(IAppBuilder app)
-        {
+        public void ConfigureAuth(IAppBuilder app) {
             // Configure o contexto do banco de dados e o gerenciador de usuários para usar uma instância por solicitação
             app.CreatePerOwinContext(ApplicationDbContext.Create);
             app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
@@ -33,8 +34,7 @@ namespace API
 
             // Configure o aplicativo para fluxo com base em OAuth
             PublicClientId = "self";
-            OAuthOptions = new OAuthAuthorizationServerOptions
-            {
+            OAuthOptions = new OAuthAuthorizationServerOptions {
                 TokenEndpointPath = new PathString("/Token"),
                 Provider = new ApplicationOAuthProvider(PublicClientId),
                 AuthorizeEndpointPath = new PathString("/api/Account/ExternalLogin"),
