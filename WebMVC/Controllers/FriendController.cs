@@ -1,46 +1,40 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using WebMVC.Models;
 
-namespace WebMVC.Controllers
-{
-    public class FriendController : Controller
-    {
+namespace WebMVC.Controllers {
+    public class FriendController : Controller {
         // GET: Friend
-        public ActionResult Login()
-        {
+        public ActionResult Login() {
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Login(LoginViewModel model)
-        {
+        public async Task<ActionResult> Login(LoginViewModel model) {
 
-            if (ModelState.IsValid)
-            {
+            if(ModelState.IsValid) {
                 var data = new Dictionary<string, string> {
                     { "grant_type", "password" },
                     { "username", model.Username },
                     { "password", model.Password }
                 };
 
-                using (var client = new HttpClient())
-                {
+                using(var client = new HttpClient()) {
                     client.BaseAddress = new Uri("http://localhost:56435");
 
-                    using (var requestContent = new FormUrlEncodedContent(data))
-                    {
+                    using(var requestContent = new FormUrlEncodedContent(data)) {
                         var response = await client.PostAsync("/Token", requestContent);
 
-                        if (response.IsSuccessStatusCode)
-                        {
+                        if(response.IsSuccessStatusCode) {
                             var responseContent = await response.Content.ReadAsStringAsync();
 
                             var tokenData = JObject.Parse(responseContent);
@@ -57,38 +51,38 @@ namespace WebMVC.Controllers
             return View();
         }
 
-        public ActionResult Register()
-        {
+        public ActionResult Register() {
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model)
-        {
+        public async Task<ActionResult> Register(RegisterViewModel model) {
+            if(ModelState.IsValid) {
+                var data = new Dictionary<string, string> {
 
-            if (ModelState.IsValid)
-            {
-                using (var client = new HttpClient())
-                {
+                    { "grant_type", "password" },
+                    { "Password", model.Password },
+                    { "Email", model.Email},
+                    { "ConfirmPassword", model.ConfirmPassword },
+                };
 
+                using(var client = new HttpClient()) {
                     client.BaseAddress = new Uri("http://localhost:56435");
 
-                    var response = await client.PostAsJsonAsync("Api/Account/Register", model);
+                    using(var requestContent = new FormUrlEncodedContent(data)) {
 
-                    if (response.IsSuccessStatusCode)
-                    {
-                        return RedirectToAction("Login");
-                    }
-                    else
-                    {
-                        return View("Error");
+                        var response = await client.PostAsync("Api/Account/Register", requestContent);
+
+                        if(response.IsSuccessStatusCode) {
+                            return RedirectToAction("Login");
+                        } else {
+                            return View("Error");
+                        }
                     }
                 }
             }
-        
             return View();
         }
-
     }
 }
