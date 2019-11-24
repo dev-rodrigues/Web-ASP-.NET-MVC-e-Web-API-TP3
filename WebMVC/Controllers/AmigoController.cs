@@ -29,7 +29,6 @@ namespace WebMVC.Controllers
         [HttpPost]
         public async Task<ActionResult> Create(InputFriendModel amigo)
         {
-            var access_email = Session["user_name"];
             var access_token = Session["access_token"];
 
             var data = new Dictionary<string, string>
@@ -54,10 +53,8 @@ namespace WebMVC.Controllers
                     if (response.IsSuccessStatusCode)
                     {
                         return RedirectToAction("Index");
-                    
                     }
                 }
-
                 return View();
             }
         }
