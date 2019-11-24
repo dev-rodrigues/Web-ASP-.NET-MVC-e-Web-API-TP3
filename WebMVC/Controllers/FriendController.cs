@@ -18,7 +18,6 @@ namespace WebMVC.Controllers {
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model) {
 
             if(ModelState.IsValid) {
@@ -42,7 +41,7 @@ namespace WebMVC.Controllers {
                             Session.Add("access_token", tokenData["access_token"]);
                             Session.Add("user_name", model.Username);
 
-                            return RedirectToAction("Index", "Home");
+                            return RedirectToAction("Index", "Amigo");
                         }
                         return View("Error");
                     }
@@ -56,7 +55,7 @@ namespace WebMVC.Controllers {
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        [AllowAnonymous]
         public async Task<ActionResult> Register(RegisterViewModel model) {
             if(ModelState.IsValid) {
                 var data = new Dictionary<string, string> {
