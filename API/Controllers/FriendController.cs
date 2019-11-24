@@ -33,6 +33,7 @@ namespace API.Controllers
             return Ok();
         }
        
+        [HttpGet]
         public IHttpActionResult Index()
         {
             var friends = FriendService.Friends();
