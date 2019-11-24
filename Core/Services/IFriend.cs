@@ -13,8 +13,9 @@ namespace Core.Services
 
         bool Update(Friend friend);
 
-        bool Delete(Friend friend);
-        Task<Friend> FindById(string id);
+        void Delete(int id);
+
+        Friend FindById(int id);
 
         List<Friend> Friends();
     }
