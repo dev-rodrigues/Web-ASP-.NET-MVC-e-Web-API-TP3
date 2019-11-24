@@ -12,7 +12,7 @@ namespace API.Models.InputFriend
         public string Sobrenome { get; set; }
         public string Telefone { get; set; }
         public string Email { get; set; }
-        public int[] Aniversario { get; set; }
+        public string Aniversario { get; set; }
 
         public Friend TransformInputIntoFriend(InputFriendBindingModel input)
         {
@@ -24,13 +24,14 @@ namespace API.Models.InputFriend
                 Telefone = input.Telefone
                 
             };
-
          
             return mockFriend;
         }
 
-        private DateTime ConvertService(int[] anoMesDia)
+        private DateTime ConvertService(string aniversarioString)
         {
+            var anoMesDia = aniversarioString.Split('/');
+
             var ano = Convert.ToInt32(anoMesDia[0]);
             var mes = Convert.ToInt32(anoMesDia[1]);
             var dia = Convert.ToInt32(anoMesDia[2]);

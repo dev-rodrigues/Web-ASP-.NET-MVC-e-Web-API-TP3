@@ -24,6 +24,7 @@ namespace API.Controllers
 
 
         [HttpPost]
+        [Route("create")]
         [AllowAnonymous]
         public IHttpActionResult Create(InputFriendBindingModel input)
         {
