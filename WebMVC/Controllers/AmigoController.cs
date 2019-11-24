@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using WebMVC.Models;
@@ -31,11 +34,11 @@ namespace WebMVC.Controllers
 
             var data = new Dictionary<string, string>
             {
-                { "Nome", amigo["Nome"] },
-                { "Sobrenome", amigo["Sobrenome"] },
-                { "Email", amigo["Email"] },
-                { "Telefone", amigo["Telefone"] },
-                { "Aniversario", amigo["Aniversario"] }
+                { "Nome", amigo.Nome },
+                { "Sobrenome", amigo.Sobrenome },
+                { "Email", amigo.Email },
+                { "Telefone", amigo.Telefone },
+                { "Aniversario", amigo.Aniversario }
             };
 
             using (var cliente = new HttpClient())
@@ -45,14 +48,16 @@ namespace WebMVC.Controllers
                 cliente.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", $"{access_token}");
 
                 using( var requestContent = new FormUrlEncodedContent(data))
-
-                var response = await cliente.PostAsync("/api/friend/create", requestContent);
-
-                if (response.IsSuccessStatusCode)
                 {
-                    return RedirectToAction("Index");
+                    var response = await cliente.PostAsync("/api/friend/create", requestContent);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        return RedirectToAction("Index");
                     
+                    }
                 }
+
                 return View();
             }
         }
