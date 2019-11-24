@@ -1,5 +1,6 @@
 ﻿using Core.Models;
 using Core.Services;
+using Data.Context;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -13,7 +14,17 @@ namespace Data.Services
     {
         public bool Create(Friend friend)
         {
-            throw new NotImplementedException();
+            try
+            {
+                DatabaseContext.Create().Friends.Add(friend);
+                DatabaseContext.Create().SaveChanges();
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            return false;
         }
 
         public bool Delete(Friend friend)
