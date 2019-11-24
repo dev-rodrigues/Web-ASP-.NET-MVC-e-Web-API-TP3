@@ -17,7 +17,20 @@ namespace WebMVC.Controllers
         public ActionResult Index ()
         {
             List<InputFriendModel> Amigos = new List<InputFriendModel>();
-            return View(Amigos);
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(UrlDefault);
+                var response = await client.GetAsync($"api/amigo/listar");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var responseContent = await response.Content.ReadAsStringAsync();
+                    profiles = JsonConvert.DeserializeObject<List<AmigoViewModel>>(responseContent);
+                }
+            }
+
+            return View(profiles);
         }
 
         [HttpGet]
