@@ -31,5 +31,29 @@ namespace WebMVC.Controllers
             return View();
         }
 
+        [HttpGet]
+        public ActionResult Delete()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Delete(InputFriendModel amigo)
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult Update()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Update(InputFriendModel amigo)
+        {
+            return View();
+        }
+
     }
 }
