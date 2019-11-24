@@ -35,6 +35,7 @@ namespace API.Controllers
         }
        
         [HttpGet]
+        [AllowAnonymous]
         public IHttpActionResult Index()
         {
             var friends = FriendService.Friends();

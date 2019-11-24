@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -14,23 +15,25 @@ namespace WebMVC.Controllers
     {
         private string UrlDefault = "http://localhost:55883";
 
-        public ActionResult Index ()
+
+        public async Task<ActionResult> Index ()
         {
             List<InputFriendModel> Amigos = new List<InputFriendModel>();
 
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(UrlDefault);
-                var response = await client.GetAsync($"api/amigo/listar");
+                var response = await client.GetAsync($"api/friend");
 
                 if (response.IsSuccessStatusCode)
                 {
                     var responseContent = await response.Content.ReadAsStringAsync();
-                    profiles = JsonConvert.DeserializeObject<List<AmigoViewModel>>(responseContent);
+                    Amigos = JsonConvert.DeserializeObject<List<InputFriendModel>>(responseContent);
+                    return View(Amigos);
                 }
             }
 
-            return View(profiles);
+            return View(Amigos);
         }
 
         [HttpGet]
@@ -57,7 +60,7 @@ namespace WebMVC.Controllers
             {
                 cliente.BaseAddress = new Uri(UrlDefault);
 
-                cliente.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", $"{access_token}");
+                //cliente.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", $"{access_token}");
 
                 using( var requestContent = new FormUrlEncodedContent(data))
                 {

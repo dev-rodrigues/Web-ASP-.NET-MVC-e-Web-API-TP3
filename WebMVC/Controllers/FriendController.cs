@@ -71,7 +71,6 @@ namespace WebMVC.Controllers {
 
                     using(var requestContent = new FormUrlEncodedContent(data)) {
 
-                        
                         var response = await client.PostAsync("Api/Account/Register", requestContent);
 
                         if(response.IsSuccessStatusCode) {
