@@ -33,5 +33,10 @@ namespace API.Controllers
             return Ok();
         }
        
+        public IHttpActionResult Index()
+        {
+            var friends = FriendService.Friends();
+            return Ok(friends);
+        }
     }
 }

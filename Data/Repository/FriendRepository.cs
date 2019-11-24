@@ -37,6 +37,13 @@ namespace Data.Services
             throw new NotImplementedException();
         }
 
+        public List<Friend> Friends()
+        {
+            var lista = new List<Friend>();
+            lista = DatabaseContext.Create().Friends.ToList();
+            return lista;
+        }
+
         public bool Update(Friend friend)
         {
             throw new NotImplementedException();

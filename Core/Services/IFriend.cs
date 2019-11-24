@@ -16,5 +16,6 @@ namespace Core.Services
         bool Delete(Friend friend);
         Task<Friend> FindById(string id);
 
+        List<Friend> Friends();
     }
 }
