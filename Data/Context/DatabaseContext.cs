@@ -12,16 +12,12 @@ namespace Data.Context
     {
         public DbSet<Friend> Friends { get; set; }
 
-        public DatabaseContext() : base("defaultconnection")
-        {
+        public DatabaseContext() : base("DefaultConnection") {
             Configuration.LazyLoadingEnabled = true;
             Configuration.ProxyCreationEnabled = true;
-
-
         }
 
-        public static DatabaseContext Create()
-        {
+        public static DatabaseContext Create() {
             return new DatabaseContext();
         }
     }
