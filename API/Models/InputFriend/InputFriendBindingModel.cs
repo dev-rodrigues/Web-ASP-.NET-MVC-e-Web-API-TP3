@@ -28,7 +28,7 @@ namespace API.Models.InputFriend
             return mockFriend;
         }
 
-        private DateTime ConvertService(string aniversarioString)
+        public DateTime ConvertService(string aniversarioString)
         {
             var anoMesDia = aniversarioString.Split('/');
 

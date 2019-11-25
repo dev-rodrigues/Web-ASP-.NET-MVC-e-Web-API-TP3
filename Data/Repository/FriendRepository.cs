@@ -26,23 +26,19 @@ namespace Data.Services {
             Friend f = Database.GetInstance.Friends.Find(id);
             Database.GetInstance.Friends.Remove(f);
             Database.GetInstance.SaveChanges();
-
-            //Friend f = DatabaseContext.Create().Friends.Find(id);
-            //DatabaseContext.Create().Friends.Remove(f);
-            //DatabaseContext.Create().SaveChanges();
         }
 
         public Friend FindById(int id) {
+            var amigos = Database.GetInstance.Friends.ToList();
 
-            Friend amigo = (Friend) Database.GetInstance.Friends.Where(x => x.Id == id);
-            //var amigos = DatabaseContext.Create().Friends.ToList();
+            foreach(Friend f in amigos) {
+                if(f.Id == id) {
+                    return f;
+                }
+            }
 
-            //foreach(Friend friend in amigos) {
-            //    if(friend.Id == id) {
-            //        return friend;
-            //    }
-            //}
-            return amigo;
+            //Friend amigo = (Friend) Database.GetInstance.Friends.Where(x => x.Id == id);
+            return null;
         }
 
         public List<Friend> Friends() {
@@ -54,8 +50,6 @@ namespace Data.Services {
         public bool Update(Friend friend) {
             try {
                 Database.GetInstance.Entry<Friend>(friend).State = EntityState.Modified;
-                //DatabaseContext.Create().Entry<Friend>(friend).State = EntityState.Modified;
-                //DatabaseContext.Create().SaveChanges();
                 Database.GetInstance.SaveChanges();
                 return true;
             } catch {
