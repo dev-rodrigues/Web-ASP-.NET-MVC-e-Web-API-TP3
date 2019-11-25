@@ -15,7 +15,7 @@ namespace WebMVC.Controllers
     {
         private string UrlDefault = "http://localhost:55883";
 
-
+        [HttpGet]
         public async Task<ActionResult> Index ()
         {
             List<InputFriendModel> Amigos = new List<InputFriendModel>();
@@ -23,7 +23,7 @@ namespace WebMVC.Controllers
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(UrlDefault);
-                var response = await client.GetAsync($"api/friend");
+                var response = await client.GetAsync("api/friend");
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -88,14 +88,44 @@ namespace WebMVC.Controllers
         }
 
         [HttpGet]
-        public ActionResult Update()
+        public ActionResult Edit(int id)
         {
             return View();
         }
 
         [HttpPost]
-        public ActionResult Update(InputFriendModel amigo)
+        public async Task<ActionResult> Edit(InputFriendModel amigo, int id)
         {
+            if (ModelState.IsValid)
+            {
+                var data = new Dictionary<string, string> {
+                    { "Nome", amigo.Nome },
+                    { "Sobrenome", amigo.Sobrenome },
+                    { "Email", amigo.Email },
+                    { "Telefone", amigo.Telefone },
+                    { "Aniversario", amigo.Aniversario }
+                };
+
+                using (var client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri(UrlDefault);
+
+                    using (var requestContent = new FormUrlEncodedContent(data))
+                    {
+                        var response = await client.PutAsync($"api/amigo/?id={id}", requestContent);
+
+                        if (response.IsSuccessStatusCode)
+                        {
+                            return RedirectToAction("Index");
+                        }
+                        else
+                        {
+                            return View();
+                        }
+                    }
+                }
+            }
+
             return View();
         }
 

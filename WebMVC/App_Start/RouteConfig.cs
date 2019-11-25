@@ -16,7 +16,7 @@ namespace WebMVC
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Friend", action = "Register", id = UrlParameter.Optional }
+                defaults: new { controller = "Amigo", action = "Index", id = UrlParameter.Optional }
             );
         }
     }

@@ -32,9 +32,9 @@ namespace API.Models.InputFriend
         {
             var anoMesDia = aniversarioString.Split('/');
 
-            var ano = Convert.ToInt32(anoMesDia[0]);
+            var ano = Convert.ToInt32(anoMesDia[2]);
             var mes = Convert.ToInt32(anoMesDia[1]);
-            var dia = Convert.ToInt32(anoMesDia[2]);
+            var dia = Convert.ToInt32(anoMesDia[0]);
 
             return new DateTime(ano, mes, dia);
         }
