@@ -48,6 +48,7 @@ namespace API.Controllers {
         }
 
         [Route("Logout")]
+        [HttpGet]
         public IHttpActionResult Logout() {
             Authentication.SignOut(CookieAuthenticationDefaults.AuthenticationType);
             return Ok();

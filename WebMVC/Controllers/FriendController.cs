@@ -57,16 +57,16 @@ namespace WebMVC.Controllers {
         public async Task<ActionResult> Logout() {
             var access_token = Session["access_token"];
 
-            using(var cliente = new HttpClient()) {
+            using (var cliente = new HttpClient()) {
                 cliente.BaseAddress = new Uri(base_url);
                 cliente.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", $"{access_token}");
 
-                var response = await cliente.GetAsync("/api/Account/Logout");
+                var response = await cliente.GetAsync("api/Account/Logout");
                 if(response.IsSuccessStatusCode) {
-                    return RedirectToAction("Login", "Account");
+                    return RedirectToAction("Login", "Friend");
                 }
             }
-            return RedirectToAction("Error", "Shared");
+            return RedirectToAction("Error");
         }
 
         public ActionResult Register() {
