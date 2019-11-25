@@ -17,11 +17,12 @@ using API.Models.InputFriend;
 namespace API.Controllers {
     [Authorize]
     [RoutePrefix("api/friend")]
+    [RequireHttps]
     public class FriendController : ApiController {
         private IFriend FriendService = ServiceLocator.GetInstanceOf<FriendRepository>();
 
         //cliente.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", $"{access_token}");
-
+        
         [HttpPost]
         public IHttpActionResult Create(InputFriendBindingModel input) {
             var friend = new InputFriendBindingModel().TransformInputIntoFriend(input);

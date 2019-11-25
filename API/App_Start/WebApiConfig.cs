@@ -13,6 +13,8 @@ namespace API {
             // Configure a API Web para usar somente a autenticação de token de portador.
             config.SuppressDefaultHostAuthentication();
             config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));
+            //Https Configuration
+            config.Filters.Add(new RequireHttpsAttribute());
 
             // Rotas de API Web
             config.MapHttpAttributeRoutes();
