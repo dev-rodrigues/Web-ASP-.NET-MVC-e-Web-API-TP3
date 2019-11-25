@@ -143,7 +143,24 @@ namespace WebMVC.Controllers
                     }
                 }
             }
+            return View();
+        }
 
+        [HttpGet]
+        public async Task<ActionResult> Details(int id) {
+
+            var friend = new InputFriendModel();
+
+            using(var client = new HttpClient()) {
+                client.BaseAddress = new Uri(UrlDefault);
+                var response = await client.GetAsync($"api/friend/{id}");
+
+                if(response.IsSuccessStatusCode) {
+                    var responseContent = await response.Content.ReadAsStringAsync();
+                    friend = JsonConvert.DeserializeObject<InputFriendModel>(responseContent);
+                    return View(friend);
+                }
+            }
             return View();
         }
 
