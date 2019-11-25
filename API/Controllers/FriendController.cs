@@ -20,9 +20,9 @@ namespace API.Controllers {
     public class FriendController : ApiController {
         private IFriend FriendService = ServiceLocator.GetInstanceOf<FriendRepository>();
 
+        //cliente.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", $"{access_token}");
 
         [HttpPost]
-        [AllowAnonymous]
         public IHttpActionResult Create(InputFriendBindingModel input) {
             var friend = new InputFriendBindingModel().TransformInputIntoFriend(input);
             var friendCreated = FriendService.Create(friend);
@@ -30,7 +30,6 @@ namespace API.Controllers {
         }
 
         [HttpPut]
-        [AllowAnonymous]
         public IHttpActionResult Edit(InputFriendBindingModel input, int id) {
             var friend_old = FriendService.FindById(id);
             friend_old.Nome = input.Nome;
@@ -46,14 +45,12 @@ namespace API.Controllers {
         }
 
         [HttpDelete]
-        [AllowAnonymous]
         public IHttpActionResult Delete(int id) {
             FriendService.Delete(id);
             return Ok();
         }
 
         [HttpGet]
-        [AllowAnonymous]
         public IHttpActionResult Index() {
             var friends = FriendService.Friends();
             return Ok(friends);
