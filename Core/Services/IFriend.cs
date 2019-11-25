@@ -5,10 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core.Services
-{
-    public interface IFriend
-    {
+namespace Core.Services {
+    public interface IFriend {
         bool Create(Friend friend);
 
         bool Update(Friend friend);

@@ -4,32 +4,38 @@ using System.Linq;
 using System.Web;
 using Core.Models;
 
-namespace API.Models.InputFriend
-{
-    public class InputFriendBindingModel
-    {
-        public string Nome { get; set; }
-        public string Sobrenome { get; set; }
-        public string Telefone { get; set; }
-        public string Email { get; set; }
-        public string Aniversario { get; set; }
+namespace API.Models.InputFriend {
+    public class InputFriend {
+        public string Nome {
+            get; set;
+        }
+        public string Sobrenome {
+            get; set;
+        }
+        public string Telefone {
+            get; set;
+        }
+        public string Email {
+            get; set;
+        }
+        public string Aniversario {
+            get; set;
+        }
 
-        public Friend TransformInputIntoFriend(InputFriendBindingModel input)
-        {
+        public Friend TransformInputIntoFriend(InputFriend input) {
             Friend mockFriend = new Friend() {
                 Aniversario = ConvertService(input.Aniversario),
                 Email = input.Email,
                 Nome = input.Nome,
                 Sobrenome = input.Sobrenome,
                 Telefone = input.Telefone
-                
+
             };
-         
+
             return mockFriend;
         }
 
-        public DateTime ConvertService(string aniversarioString)
-        {
+        public DateTime ConvertService(string aniversarioString) {
             var anoMesDia = aniversarioString.Split('/');
             var ano = Convert.ToInt32(anoMesDia[2]);
             var mes = Convert.ToInt32(anoMesDia[1]);

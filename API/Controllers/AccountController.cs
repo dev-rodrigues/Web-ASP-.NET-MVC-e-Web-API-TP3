@@ -21,7 +21,9 @@ namespace API.Controllers {
     [Authorize]
     [RoutePrefix("api/Account")]
     public class AccountController : ApiController {
+
         private const string LocalLoginProvider = "Local";
+
         private ApplicationUserManager _userManager;
 
         public AccountController() {
@@ -75,9 +77,7 @@ namespace API.Controllers {
             if(!ModelState.IsValid) {
                 return BadRequest(ModelState);
             }
-
             var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
-
             IdentityResult result = await UserManager.CreateAsync(user, model.Password);
 
             if(!result.Succeeded) {
@@ -115,7 +115,6 @@ namespace API.Controllers {
                 }
 
                 if(ModelState.IsValid) {
-                    // Nenhum erro ModelState disponível para envio; retorne um BadRequest vazio.
                     return BadRequest();
                 }
 

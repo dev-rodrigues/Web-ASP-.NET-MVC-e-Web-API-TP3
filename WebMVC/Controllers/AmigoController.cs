@@ -94,7 +94,7 @@ namespace WebMVC.Controllers {
         public async Task<ActionResult> Delete(InputFriendModel amigo, int id) {
             var access_token = Session["access_token"];
 
-            using (var client = new HttpClient()) {
+            using(var client = new HttpClient()) {
                 client.BaseAddress = new Uri(UrlDefault);
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", $"{access_token}");
 
@@ -117,7 +117,7 @@ namespace WebMVC.Controllers {
         public async Task<ActionResult> Edit(InputFriendModel amigo, int id) {
             var access_token = Session["access_token"];
 
-            if (ModelState.IsValid) {
+            if(ModelState.IsValid) {
                 var data = new Dictionary<string, string> {
                     { "Nome", amigo.Nome },
                     { "Sobrenome", amigo.Sobrenome },
@@ -164,6 +164,5 @@ namespace WebMVC.Controllers {
             }
             return View();
         }
-
     }
 }

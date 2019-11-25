@@ -22,20 +22,20 @@ namespace API.Controllers {
 
 
         [HttpPost]
-        public IHttpActionResult Create(InputFriendBindingModel input) {
-            var friend = new InputFriendBindingModel().TransformInputIntoFriend(input);
+        public IHttpActionResult Create(InputFriend input) {
+            var friend = new InputFriend().TransformInputIntoFriend(input);
             var friendCreated = FriendService.Create(friend);
             return Ok();
         }
 
         [HttpPut]
-        public IHttpActionResult Edit(InputFriendBindingModel input, int id) {
+        public IHttpActionResult Edit(InputFriend input, int id) {
             var friend_old = FriendService.FindById(id);
             friend_old.Nome = input.Nome;
             friend_old.Sobrenome = input.Sobrenome;
             friend_old.Telefone = input.Telefone;
             friend_old.Email = input.Email;
-            friend_old.Aniversario = new InputFriendBindingModel().ConvertService(input.Aniversario);
+            friend_old.Aniversario = new InputFriend().ConvertService(input.Aniversario);
             var atualizou = FriendService.Update(friend_old);
             if(atualizou) {
                 return Ok(friend_old);
