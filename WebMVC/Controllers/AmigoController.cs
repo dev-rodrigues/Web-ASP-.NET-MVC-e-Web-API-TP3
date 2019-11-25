@@ -45,8 +45,6 @@ namespace WebMVC.Controllers
         [HttpPost]
         public async Task<ActionResult> Create(InputFriendModel amigo)
         {
-            var access_token = Session["access_token"];
-
             var data = new Dictionary<string, string>
             {
                 { "Nome", amigo.Nome },
@@ -59,8 +57,6 @@ namespace WebMVC.Controllers
             using (var cliente = new HttpClient())
             {
                 cliente.BaseAddress = new Uri(UrlDefault);
-
-                //cliente.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", $"{access_token}");
 
                 using( var requestContent = new FormUrlEncodedContent(data))
                 {
@@ -76,14 +72,36 @@ namespace WebMVC.Controllers
         }
 
         [HttpGet]
-        public ActionResult Delete()
+        public async Task<ActionResult> Delete(int id)
         {
+            var friend = new InputFriendModel();
+
+            using(var client = new HttpClient()) {
+                client.BaseAddress = new Uri(UrlDefault);
+                var response = await client.GetAsync($"api/friend/{id}");
+
+                if(response.IsSuccessStatusCode) {
+                    var responseContent = await response.Content.ReadAsStringAsync();
+                    friend = JsonConvert.DeserializeObject<InputFriendModel> (responseContent);
+                    return View(friend);
+                }
+            }
+
             return View();
         }
 
         [HttpPost]
-        public ActionResult Delete(InputFriendModel amigo)
+        public async Task<ActionResult> Delete(InputFriendModel amigo, int id)
         {
+            using(var client = new HttpClient()) {
+                client.BaseAddress = new Uri(UrlDefault);
+                var response = await client.DeleteAsync($"api/friend/{id}");
+
+                if(response.IsSuccessStatusCode) {
+                    return RedirectToAction("Index");
+                }
+            }
+
             return View();
         }
 

@@ -58,5 +58,12 @@ namespace API.Controllers {
             var friends = FriendService.Friends();
             return Ok(friends);
         }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public IHttpActionResult Index(int id) {
+            var friend = FriendService.FindById(id);
+            return Ok(friend);
+        }
     }
 }
