@@ -57,7 +57,7 @@ namespace WebMVC.Controllers {
         public async Task<ActionResult> Logout() {
             var access_token = Session["access_token"];
 
-            using(var cliente = new HttpClient()) {
+            using (var cliente = new HttpClient()) {
                 cliente.BaseAddress = new Uri(base_url);
                 cliente.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", $"{access_token}");
 
