@@ -20,6 +20,7 @@ using API.Results;
 namespace API.Controllers {
     [Authorize]
     [RoutePrefix("api/Account")]
+    [RequireHttps]
     public class AccountController : ApiController {
 
         private const string LocalLoginProvider = "Local";

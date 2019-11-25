@@ -13,7 +13,7 @@ using WebMVC.Models;
 namespace WebMVC.Controllers {
     public class FriendController : Controller {
 
-        private static string base_url = "http://localhost:55883";
+        private static string base_url = "https://localhost:44328";
 
         public ActionResult Login() {
             return View();

@@ -11,7 +11,7 @@ using WebMVC.Models;
 
 namespace WebMVC.Controllers {
     public class AmigoController : Controller {
-        private string UrlDefault = "http://localhost:55883";
+        private string UrlDefault = "https://localhost:44328";
 
         [HttpGet]
         public async Task<ActionResult> Index() {

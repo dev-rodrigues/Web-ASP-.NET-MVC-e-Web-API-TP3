@@ -17,9 +17,9 @@ using API.Models.InputFriend;
 namespace API.Controllers {
     [Authorize]
     [RoutePrefix("api/friend")]
+    [RequireHttps]
     public class FriendController : ApiController {
         private IFriend FriendService = ServiceLocator.GetInstanceOf<FriendRepository>();
-
 
         [HttpPost]
         public IHttpActionResult Create(InputFriend input) {
