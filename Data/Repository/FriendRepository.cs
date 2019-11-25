@@ -36,8 +36,6 @@ namespace Data.Services {
                     return f;
                 }
             }
-
-            //Friend amigo = (Friend) Database.GetInstance.Friends.Where(x => x.Id == id);
             return null;
         }
 

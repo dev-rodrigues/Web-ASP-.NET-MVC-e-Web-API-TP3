@@ -25,7 +25,6 @@ namespace API.Controllers {
         [AllowAnonymous]
         public IHttpActionResult Create(InputFriendBindingModel input) {
             var friend = new InputFriendBindingModel().TransformInputIntoFriend(input);
-
             var friendCreated = FriendService.Create(friend);
             return Ok();
         }
@@ -44,6 +43,13 @@ namespace API.Controllers {
                 return Ok(friend_old);
             }
             return BadRequest();
+        }
+
+        [HttpDelete]
+        [AllowAnonymous]
+        public IHttpActionResult Delete(int id) {
+            FriendService.Delete(id);
+            return Ok();
         }
 
         [HttpGet]
