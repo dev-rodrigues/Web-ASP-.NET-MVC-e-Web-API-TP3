@@ -63,7 +63,7 @@ namespace WebMVC.Controllers {
 
                 var response = await cliente.GetAsync("/api/Account/Logout");
                 if(response.IsSuccessStatusCode) {
-                    return RedirectToAction("Login", "Account");
+                    return RedirectToAction("Login", "Friend");
                 }
             }
             return RedirectToAction("Error", "Shared");

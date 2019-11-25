@@ -25,9 +25,9 @@
                     <li>
                         @if (ViewBag.Title != "Login" && ViewBag.Title != "Register")
                         {
-                            <form action="/Friend/Logout" method="post">
+                            <form action="/Account/Logout" method="post">
                                 @Html.AntiForgeryToken()
-                                <button type="submit" class="btn btn-default navbar-btn">Logout</button>
+                                <button type="submit" class="btn btn-default navbar-btn" >Logout</button>
                             </form>
                         }
                     </li>
