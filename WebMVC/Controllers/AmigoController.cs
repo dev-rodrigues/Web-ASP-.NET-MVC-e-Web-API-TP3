@@ -88,7 +88,7 @@ namespace WebMVC.Controllers
         }
 
         [HttpGet]
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int Id)
         {
             return View();
         }
@@ -112,7 +112,7 @@ namespace WebMVC.Controllers
 
                     using (var requestContent = new FormUrlEncodedContent(data))
                     {
-                        var response = await client.PutAsync($"api/amigo/?id={id}", requestContent);
+                        var response = await client.PutAsync($"api/friend/{id}", requestContent);
 
                         if (response.IsSuccessStatusCode)
                         {

@@ -171,6 +171,7 @@
     <Content Include="Views\Friend\Register.cshtml" />
     <Content Include="Views\Amigo\Index.cshtml" />
     <Content Include="Views\Amigo\Create.cshtml" />
+    <Content Include="Views\Amigo\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
