@@ -61,12 +61,12 @@ namespace WebMVC.Controllers {
                 cliente.BaseAddress = new Uri(base_url);
                 cliente.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", $"{access_token}");
 
-                var response = await cliente.GetAsync("/api/Account/Logout");
+                var response = await cliente.GetAsync("api/Account/Logout");
                 if(response.IsSuccessStatusCode) {
                     return RedirectToAction("Login", "Friend");
                 }
             }
-            return RedirectToAction("Error", "Shared");
+            return RedirectToAction("Error");
         }
 
         public ActionResult Register() {
