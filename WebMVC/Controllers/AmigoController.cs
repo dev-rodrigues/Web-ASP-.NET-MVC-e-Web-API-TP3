@@ -54,9 +54,8 @@ namespace WebMVC.Controllers {
             };
 
             using(var cliente = new HttpClient()) {
-                cliente.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", $"{access_token}");
-
                 cliente.BaseAddress = new Uri(UrlDefault);
+                cliente.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", $"{access_token}");
 
                 using(var requestContent = new FormUrlEncodedContent(data)) {
                     var response = await cliente.PostAsync("/api/friend/create", requestContent);
@@ -76,9 +75,9 @@ namespace WebMVC.Controllers {
             var friend = new InputFriendModel();
 
             using(var client = new HttpClient()) {
+                client.BaseAddress = new Uri(UrlDefault);
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", $"{access_token}");
 
-                client.BaseAddress = new Uri(UrlDefault);
                 var response = await client.GetAsync($"api/friend/{id}");
 
                 if(response.IsSuccessStatusCode) {
@@ -96,9 +95,9 @@ namespace WebMVC.Controllers {
             var access_token = Session["access_token"];
 
             using (var client = new HttpClient()) {
+                client.BaseAddress = new Uri(UrlDefault);
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", $"{access_token}");
 
-                client.BaseAddress = new Uri(UrlDefault);
                 var response = await client.DeleteAsync($"api/friend/{id}");
 
                 if(response.IsSuccessStatusCode) {
@@ -128,9 +127,8 @@ namespace WebMVC.Controllers {
                 };
 
                 using(var client = new HttpClient()) {
-                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", $"{access_token}");
-
                     client.BaseAddress = new Uri(UrlDefault);
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", $"{access_token}");
 
                     using(var requestContent = new FormUrlEncodedContent(data)) {
                         var response = await client.PutAsync($"api/friend/{id}", requestContent);
@@ -153,9 +151,9 @@ namespace WebMVC.Controllers {
             var friend = new InputFriendModel();
 
             using(var client = new HttpClient()) {
+                client.BaseAddress = new Uri(UrlDefault);
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", $"{access_token}");
 
-                client.BaseAddress = new Uri(UrlDefault);
                 var response = await client.GetAsync($"api/friend/{id}");
 
                 if(response.IsSuccessStatusCode) {
