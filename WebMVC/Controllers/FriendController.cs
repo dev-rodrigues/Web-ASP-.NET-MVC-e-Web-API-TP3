@@ -12,7 +12,9 @@ using WebMVC.Models;
 
 namespace WebMVC.Controllers {
     public class FriendController : Controller {
-        // GET: Friend
+
+        private static string base_url = "http://localhost:55883";
+
         public ActionResult Login() {
             return View();
         }
@@ -28,7 +30,7 @@ namespace WebMVC.Controllers {
                 };
 
                 using(var client = new HttpClient()) {
-                    client.BaseAddress = new Uri("http://localhost:56435");
+                    client.BaseAddress = new Uri(base_url);
 
                     using(var requestContent = new FormUrlEncodedContent(data)) {
                         var response = await client.PostAsync("/Token", requestContent);
@@ -50,6 +52,23 @@ namespace WebMVC.Controllers {
             return View();
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Logout() {
+            var access_token = Session["access_token"];
+
+            using(var cliente = new HttpClient()) {
+                cliente.BaseAddress = new Uri(base_url);
+                cliente.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", $"{access_token}");
+
+                var response = await cliente.GetAsync("/api/Account/Logout");
+                if(response.IsSuccessStatusCode) {
+                    return RedirectToAction("Login", "Account");
+                }
+            }
+            return RedirectToAction("Error", "Shared");
+        }
+
         public ActionResult Register() {
             return View();
         }
@@ -67,7 +86,7 @@ namespace WebMVC.Controllers {
                 };
 
                 using(var client = new HttpClient()) {
-                    client.BaseAddress = new Uri("http://localhost:56435");
+                    client.BaseAddress = new Uri(base_url);
 
                     using(var requestContent = new FormUrlEncodedContent(data)) {
 

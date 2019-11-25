@@ -9,24 +9,19 @@ using System.Web;
 using System.Web.Mvc;
 using WebMVC.Models;
 
-namespace WebMVC.Controllers
-{
-    public class AmigoController : Controller
-    {
+namespace WebMVC.Controllers {
+    public class AmigoController : Controller {
         private string UrlDefault = "http://localhost:55883";
 
         [HttpGet]
-        public async Task<ActionResult> Index ()
-        {
+        public async Task<ActionResult> Index() {
             List<InputFriendModel> Amigos = new List<InputFriendModel>();
 
-            using (var client = new HttpClient())
-            {
+            using(var client = new HttpClient()) {
                 client.BaseAddress = new Uri(UrlDefault);
                 var response = await client.GetAsync("api/friend");
 
-                if (response.IsSuccessStatusCode)
-                {
+                if(response.IsSuccessStatusCode) {
                     var responseContent = await response.Content.ReadAsStringAsync();
                     Amigos = JsonConvert.DeserializeObject<List<InputFriendModel>>(responseContent);
                     return View(Amigos);
@@ -37,14 +32,12 @@ namespace WebMVC.Controllers
         }
 
         [HttpGet]
-        public ActionResult Create ()
-        {
+        public ActionResult Create() {
             return View();
         }
 
         [HttpPost]
-        public async Task<ActionResult> Create(InputFriendModel amigo)
-        {
+        public async Task<ActionResult> Create(InputFriendModel amigo) {
             var data = new Dictionary<string, string>
             {
                 { "Nome", amigo.Nome },
@@ -54,16 +47,13 @@ namespace WebMVC.Controllers
                 { "Aniversario", amigo.Aniversario }
             };
 
-            using (var cliente = new HttpClient())
-            {
+            using(var cliente = new HttpClient()) {
                 cliente.BaseAddress = new Uri(UrlDefault);
 
-                using( var requestContent = new FormUrlEncodedContent(data))
-                {
+                using(var requestContent = new FormUrlEncodedContent(data)) {
                     var response = await cliente.PostAsync("/api/friend/create", requestContent);
 
-                    if (response.IsSuccessStatusCode)
-                    {
+                    if(response.IsSuccessStatusCode) {
                         return RedirectToAction("Index");
                     }
                 }
@@ -72,8 +62,7 @@ namespace WebMVC.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> Delete(int id)
-        {
+        public async Task<ActionResult> Delete(int id) {
             var friend = new InputFriendModel();
 
             using(var client = new HttpClient()) {
@@ -82,7 +71,7 @@ namespace WebMVC.Controllers
 
                 if(response.IsSuccessStatusCode) {
                     var responseContent = await response.Content.ReadAsStringAsync();
-                    friend = JsonConvert.DeserializeObject<InputFriendModel> (responseContent);
+                    friend = JsonConvert.DeserializeObject<InputFriendModel>(responseContent);
                     return View(friend);
                 }
             }
@@ -91,8 +80,7 @@ namespace WebMVC.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Delete(InputFriendModel amigo, int id)
-        {
+        public async Task<ActionResult> Delete(InputFriendModel amigo, int id) {
             using(var client = new HttpClient()) {
                 client.BaseAddress = new Uri(UrlDefault);
                 var response = await client.DeleteAsync($"api/friend/{id}");
@@ -106,16 +94,13 @@ namespace WebMVC.Controllers
         }
 
         [HttpGet]
-        public ActionResult Edit(int Id)
-        {
+        public ActionResult Edit(int Id) {
             return View();
         }
 
         [HttpPost]
-        public async Task<ActionResult> Edit(InputFriendModel amigo, int id)
-        {
-            if (ModelState.IsValid)
-            {
+        public async Task<ActionResult> Edit(InputFriendModel amigo, int id) {
+            if(ModelState.IsValid) {
                 var data = new Dictionary<string, string> {
                     { "Nome", amigo.Nome },
                     { "Sobrenome", amigo.Sobrenome },
@@ -124,20 +109,15 @@ namespace WebMVC.Controllers
                     { "Aniversario", amigo.Aniversario }
                 };
 
-                using (var client = new HttpClient())
-                {
+                using(var client = new HttpClient()) {
                     client.BaseAddress = new Uri(UrlDefault);
 
-                    using (var requestContent = new FormUrlEncodedContent(data))
-                    {
+                    using(var requestContent = new FormUrlEncodedContent(data)) {
                         var response = await client.PutAsync($"api/friend/{id}", requestContent);
 
-                        if (response.IsSuccessStatusCode)
-                        {
+                        if(response.IsSuccessStatusCode) {
                             return RedirectToAction("Index");
-                        }
-                        else
-                        {
+                        } else {
                             return View();
                         }
                     }
